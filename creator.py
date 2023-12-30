@@ -6,15 +6,15 @@ base16 color schemes.
 A `color-scheme.yaml` is parsed to get the colors
 """
 
+import sys
+
 import yaml
 from PIL import Image, ImageDraw, ImageFont
 
-BASE16_YAML = "/home/cosmos/Repos/base16-danqing-scheme/danqing.yaml"
 BORDER_GAP = 20
 SQUARE_SIZE = 250
 FONT_SIZE = 36
-FONT_FILE = "./sarasa-semibolditalic.ttc"
-
+FONT_FILE = "RecursiveMonoLnrSt-Regular.otf"
 
 def get_color(colors, index):
     if index < 0 or index > 15:
@@ -53,7 +53,7 @@ def is_light_bg(color_hex):
 
 if __name__ == "__main__":
     # Read the base16 color scheme
-    with open(BASE16_YAML, 'r', encoding='utf-8') as f:
+    with open(sys.argv[1], 'r', encoding='utf-8') as f:
         colors = yaml.load(f, Loader=yaml.FullLoader)
 
     font = ImageFont.truetype(FONT_FILE, FONT_SIZE)
@@ -62,8 +62,9 @@ if __name__ == "__main__":
     color_fg = get_color(colors, 5)
 
     color_names = [
-        "", "", "", "", "", "素", "", "", "酡颜", "姜黄", "缃色", "蟹壳青", "湖蓝", "雪青",
-        "丁香紫", "琥珀"
+        "base00", "base01", "base02", "base03", "base04", "base05", "base06",
+        "base07", "base08", "base09", "base0A", "base0B", "base0C", "base0D",
+        "base0E", "base0F"
     ]
 
     # Image setup
@@ -75,7 +76,7 @@ if __name__ == "__main__":
 
     # Palatte Name
     draw.text((BORDER_GAP, BORDER_GAP),
-              colors['scheme'] + " 丹青",
+              colors['scheme'],
               color_fg,
               font=font)
 
@@ -111,4 +112,4 @@ if __name__ == "__main__":
                     text_color,
                     font=font)
 
-    im.save('palette.png', quality=100)
+    im.save(sys.argv[2], quality=100)
